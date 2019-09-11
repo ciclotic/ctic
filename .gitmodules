@@ -1,0 +1,24 @@
+[submodule "productos"]
+	path = productos
+	url = https://github.com/ciclotic/ctic_product.git
+[submodule "grh"]
+	path = grh
+	url = https://github.com/ciclotic/ctic_hr.git
+[submodule "documentos"]
+	path = documentos
+	url = https://github.com/ciclotic/ctic_document.git
+[submodule "dispositivos"]
+	path = dispositivos
+	url = https://github.com/ciclotic/ctic_device.git
+[submodule "cuentas"]
+	path = cuentas
+	url = https://github.com/ciclotic/ctic_account.git
+[submodule "config"]
+	path = config
+	url = https://github.com/ciclotic/ctic_setting.git
+[submodule "clientes"]
+	path = clientes
+	url = https://github.com/ciclotic/ctic_customer.git
+[submodule "almacenes"]
+	path = almacenes
+	url = https://github.com/ciclotic/ctic_warehouse.git

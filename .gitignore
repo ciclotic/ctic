@@ -1,0 +1,18 @@
+.idea
+config/*
+productos/*
+almacenes/*
+documentos/*
+dispositivos/*
+grh/*
+cuentas/*
+clientes/*
+proxy/*
+!proxy/control.txt
+config.yml
+composer.lock
+vendor
+
+###> docker ###
+.docker/data/*
+###< docker ###

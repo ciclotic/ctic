@@ -1,0 +1,44 @@
+general:
+  dev_mode: false
+  host: 'example.com'
+  locale:
+    default: 'es'
+
+db:
+  driver: 'pdo_mysql'
+  user: 'db_user'
+  password: 'db_password'
+  host: 'db_host'
+  dbname: 'db_name'
+
+smtp:
+  user: 'smtp_user'
+  password: 'smtp_password'
+  host: 'smtp_host'
+
+modlue_account:
+  path: 'cuentas'
+  host: 'cuentas.example.com'
+
+modules:
+  config:
+    path: 'config'
+    host: 'config.example.com'
+  product:
+    path: 'productos'
+    host: 'productos.example.com'
+  warehouse:
+    path: 'almacenes'
+    host: 'almacenes.example.com'
+  device:
+    path: 'dispositivos'
+    host: 'dispositivos.example.com'
+  human_resources:
+    path: 'grh'
+    host: 'grh.example.com'
+  customers:
+    path: 'clientes'
+    host: 'clientes.example.com'
+  documents:
+    path: 'documentos'
+    host: 'documentos.example.com'
