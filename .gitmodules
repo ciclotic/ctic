@@ -22,3 +22,9 @@
 [submodule "almacenes"]
 	path = almacenes
 	url = https://github.com/ciclotic/ctic_warehouse.git
+[submodule "webmail"]
+	path = webmail
+	url = https://github.com/ciclotic/webmail.git
+[submodule "api"]
+	path = api
+	url = https://github.com/ciclotic/ctic_api.git

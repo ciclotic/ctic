@@ -1,0 +1,15 @@
+db:
+  user: 'db_user'
+  password: 'db_password'
+  host: 'db_host'
+  dbname: 'db_name'
+
+printer:
+  -
+    id: 1
+    ip: 'printer_ip'
+    port: 9100
+  -
+    id: 2
+    ip: 'printer_ip'
+    port: 9100
