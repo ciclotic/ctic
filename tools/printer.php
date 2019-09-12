@@ -70,11 +70,13 @@ while ($lineaTicket = $result->fetch_assoc()) {
     if (empty($lastTicket[$terminalTicket]) || $lastTicket[$terminalTicket]['id_tiquet'] != $lineaTicket['id_tiquet']) {
         if (!empty($lastTicket[$terminalTicket])) {
             $printer->cut();
-            $printer->text("\n");
-        }    
+            $printer->text("\n\n");
+        } else {
+            $printer->text("\n\n");
+        }
 
         $printer->setTextSize(2, 2);
-        $printer->text($customer['nombre'] . "\n");
+        $printer->text($customer['nombre'] . "\n\n");
         $printer->setTextSize(1, 1);
         $printer->text($lineaTicket['hora'] . "\n");
     }
