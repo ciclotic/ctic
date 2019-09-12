@@ -1,4 +1,4 @@
-<?php
+﻿<?php
 
 require_once __DIR__ . '/vendor/autoload.php';
 
@@ -10,9 +10,11 @@ $config = Yaml::parse(file_get_contents(__DIR__.'/config.yml'));
 
 $printers = array();
 $connectors = array();
+$lastTicket = array();
 foreach ($config['printer'] as $printer) {
     $connectors[$printer['id']] = new NetworkPrintConnector($printer['ip'], $printer['port']);
     $printers[$printer['id']] = new Printer($connectors[$printer['id']]);
+    $lastTicket[$printer['id']] = array();
 }
 
 $mysqli = new mysqli($config['db']['host'], $config['db']['user'], $config['db']['password'], $config['db']['dbname']);
@@ -41,13 +43,14 @@ if ($result->num_rows === 0) {
     exit;
 }
 
-$lastTicket = array();
 while ($lineaTicket = $result->fetch_assoc()) {
-    if (empty($printers[$lineaTicket['terminal']])) {
+    $terminalsTicket = str_split($lineaTicket['terminal']);
+    foreach ($terminalsTicket as $terminalTicket) {
+    if (empty($printers[$terminalTicket])) {
         echo "Error: No se encuentra el terminal asociado al ticket \n";
         continue;
     }
-    $printer = $printers[$lineaTicket['terminal']];
+    $printer = $printers[$terminalTicket];
     $sqlCustomer = "SELECT codi, nombre FROM clientes WHERE codi = " . $lineaTicket['id_client'] . " ORDER BY codi DESC LIMIT 1";
     if (!$resultCustomer = $mysqli->query($sqlCustomer)) {
         echo "Lo sentimos, la base de datos está experimentando problemas.\n";
@@ -64,7 +67,7 @@ while ($lineaTicket = $result->fetch_assoc()) {
     }
     $customer = $resultCustomer->fetch_assoc();
 
-    if (empty($lastTicket) || $lastTicket['id_tiquet'] != $lineaTicket['id_tiquet']) {
+    if (empty($lastTicket[$terminalTicket]) || $lastTicket[$terminalTicket]['id_tiquet'] != $lineaTicket['id_tiquet']) {
         $printer->setTextSize(2, 2);
         $printer->text($customer['nombre'] . "\n");
         $printer->setTextSize(1, 1);
@@ -112,7 +115,7 @@ while ($lineaTicket = $result->fetch_assoc()) {
     }
     $result2->free();
 
-    if (!empty($lastTicket) && $lastTicket['id_tiquet'] != $lineaTicket['id_tiquet']) {
+    if (!empty($lastTicket[$terminalTicket]) && $lastTicket[$terminalTicket]['id_tiquet'] != $lineaTicket['id_tiquet']) {
         $printer->cut();
         $printer->text("\n");
     }
@@ -128,7 +131,8 @@ while ($lineaTicket = $result->fetch_assoc()) {
         exit;
     }
 
-    $lastTicket = $lineaTicket;
+    $lastTicket[$terminalTicket] = $lineaTicket;
+    }
 }
 
 if (!empty($lastTicket)) {
