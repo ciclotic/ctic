@@ -68,6 +68,11 @@ while ($lineaTicket = $result->fetch_assoc()) {
     $customer = $resultCustomer->fetch_assoc();
 
     if (empty($lastTicket[$terminalTicket]) || $lastTicket[$terminalTicket]['id_tiquet'] != $lineaTicket['id_tiquet']) {
+        if (!empty($lastTicket[$terminalTicket])) {
+            $printer->cut();
+            $printer->text("\n");
+        }    
+
         $printer->setTextSize(2, 2);
         $printer->text($customer['nombre'] . "\n");
         $printer->setTextSize(1, 1);
@@ -114,11 +119,6 @@ while ($lineaTicket = $result->fetch_assoc()) {
         }
     }
     $result2->free();
-
-    if (!empty($lastTicket[$terminalTicket]) && $lastTicket[$terminalTicket]['id_tiquet'] != $lineaTicket['id_tiquet']) {
-        $printer->cut();
-        $printer->text("\n");
-    }
 
     $sqlUpdate = "UPDATE taules_temp_1 SET observacio = 'HECHO' WHERE id = " . $lineaTicket['id'] . " LIMIT 1";
     if (!$resultUpdate = $mysqli->query($sqlUpdate)) {
