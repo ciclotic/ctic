@@ -135,11 +135,11 @@ while ($lineaTicket = $result->fetch_assoc()) {
     }
 }
 
-if (!empty($lastTicket)) {
-    $printer->cut();
-}
+foreach ($printers as $terminal => $printer) {
+    if (!empty($lastTicket[$terminal])) {
+        $printer->cut();
+    }
 
-foreach ($printers as $printer) {
     $printer->close();
 }
 
